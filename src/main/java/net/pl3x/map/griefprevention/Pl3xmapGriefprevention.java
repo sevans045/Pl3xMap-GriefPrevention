@@ -17,7 +17,7 @@ public final class Pl3xmapGriefprevention extends JavaPlugin {
         }
 
         if (!getServer().getPluginManager().isPluginEnabled("Pl3xMap")) {
-            getLogger().severe("GriefPrevention not found!");
+            getLogger().severe("Pl3xMap not found!");
             getServer().getPluginManager().disablePlugin(this);
             return;
         }
