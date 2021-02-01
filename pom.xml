@@ -43,10 +43,10 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
-        <!--<repository>
+        <repository>
             <id>pl3x-repo</id>
             <url>https://repo.pl3x.net/</url>
-        </repository>-->
+        </repository>
         <repository>
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
