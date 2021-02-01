@@ -1,11 +1,9 @@
 package net.pl3x.map.griefprevention;
 
-import net.pl3x.map.griefprevention.hook.GriefPreventionHook;
 import net.pl3x.map.griefprevention.hook.Pl3xMapHook;
 import org.bukkit.plugin.java.JavaPlugin;
 
-public final class Pl3xmapGriefprevention extends JavaPlugin {
-    private GriefPreventionHook griefpreventionHook;
+public final class Pl3xMapGriefprevention extends JavaPlugin {
     private Pl3xMapHook pl3xmapHook;
 
     @Override
@@ -22,7 +20,6 @@ public final class Pl3xmapGriefprevention extends JavaPlugin {
             return;
         }
 
-        griefpreventionHook = new GriefPreventionHook(this);
         pl3xmapHook = new Pl3xMapHook(this);
     }
 
@@ -31,9 +28,5 @@ public final class Pl3xmapGriefprevention extends JavaPlugin {
         if (pl3xmapHook != null) {
             pl3xmapHook.disable();
         }
-    }
-
-    public GriefPreventionHook getGPHook() {
-        return griefpreventionHook;
     }
 }

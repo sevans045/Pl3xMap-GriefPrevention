@@ -8,7 +8,7 @@ import net.pl3x.map.api.SimpleLayerProvider;
 import net.pl3x.map.api.marker.Marker;
 import net.pl3x.map.api.marker.MarkerOptions;
 import net.pl3x.map.api.marker.Rectangle;
-import net.pl3x.map.griefprevention.Pl3xmapGriefprevention;
+import net.pl3x.map.griefprevention.hook.GPHook;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -16,14 +16,12 @@ import java.awt.Color;
 import java.util.Collection;
 
 public class Pl3xMapTask extends BukkitRunnable {
-    private final Pl3xmapGriefprevention plugin;
     private final MapWorld world;
     private final SimpleLayerProvider provider;
 
     private boolean stop;
 
-    public Pl3xMapTask(Pl3xmapGriefprevention plugin, MapWorld world, SimpleLayerProvider provider) {
-        this.plugin = plugin;
+    public Pl3xMapTask(MapWorld world, SimpleLayerProvider provider) {
         this.world = world;
         this.provider = provider;
     }
@@ -38,7 +36,7 @@ public class Pl3xMapTask extends BukkitRunnable {
 
     void updateClaims() {
         provider.clearMarkers(); // TODO track markers instead of clearing them
-        Collection<Claim> topLevelClaims = this.plugin.getGPHook().getClaims();
+        Collection<Claim> topLevelClaims = GPHook.getClaims();
         if (topLevelClaims != null) {
             topLevelClaims.stream()
                     .filter(claim -> claim.getGreaterBoundaryCorner().getWorld().getUID().equals(this.world.uuid()))
