@@ -1,5 +1,6 @@
 package net.pl3x.map.griefprevention;
 
+import net.pl3x.map.griefprevention.configuration.Config;
 import net.pl3x.map.griefprevention.hook.Pl3xMapHook;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -8,6 +9,8 @@ public final class Pl3xMapGriefprevention extends JavaPlugin {
 
     @Override
     public void onEnable() {
+        Config.reload(this);
+
         if (!getServer().getPluginManager().isPluginEnabled("GriefPrevention")) {
             getLogger().severe("GriefPrevention not found!");
             getServer().getPluginManager().disablePlugin(this);

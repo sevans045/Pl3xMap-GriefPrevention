@@ -8,11 +8,13 @@ import net.pl3x.map.api.SimpleLayerProvider;
 import net.pl3x.map.api.marker.Marker;
 import net.pl3x.map.api.marker.MarkerOptions;
 import net.pl3x.map.api.marker.Rectangle;
+import net.pl3x.map.griefprevention.configuration.Config;
 import net.pl3x.map.griefprevention.hook.GPHook;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.Color;
+import java.util.ArrayList;
 import java.util.Collection;
 
 public class Pl3xMapTask extends BukkitRunnable {
@@ -52,16 +54,34 @@ public class Pl3xMapTask extends BukkitRunnable {
             return;
         }
 
-        String worldName = min.getWorld().getName();
-        String ownerName = claim.getOwnerName();
-
         Rectangle rect = Marker.rectangle(Point.of(min.getBlockX(), min.getBlockZ()), Point.of(max.getBlockX() + 1, max.getBlockZ() + 1));
 
+        ArrayList<String> builders = new ArrayList<>();
+        ArrayList<String> containers = new ArrayList<>();
+        ArrayList<String> accessors = new ArrayList<>();
+        ArrayList<String> managers = new ArrayList<>();
+        claim.getPermissions(builders, containers, accessors, managers);
+
+        String worldName = min.getWorld().getName();
+
         MarkerOptions.Builder options = MarkerOptions.builder()
-                .strokeColor(Color.GREEN)
-                .fillColor(Color.GREEN)
-                .fillOpacity(0.2)
-                .clickTooltip("Region owned by<br/>" + ownerName);
+                .strokeColor(Config.STROKE_COLOR)
+                .strokeWeight(Config.STROKE_WEIGHT)
+                .strokeOpacity(Config.STROKE_OPACITY)
+                .fillColor(Config.FILL_COLOR)
+                .fillOpacity(Config.FILL_OPACITY)
+                .clickTooltip((claim.isAdminClaim() ? Config.ADMIN_CLAIM_TOOLTIP : Config.CLAIM_TOOLTIP)
+                        .replace("{world}", worldName)
+                        .replace("{id}", Long.toString(claim.getID()))
+                        .replace("{owner}", claim.getOwnerName())
+                        .replace("{managers}", String.join(", ", managers))
+                        .replace("{builders}", String.join(", ", builders))
+                        .replace("{containers}", String.join(", ", containers))
+                        .replace("{accessors}", String.join(", ", accessors))
+                        .replace("{area}", Integer.toString(claim.getArea()))
+                        .replace("{width}", Integer.toString(claim.getWidth()))
+                        .replace("{height}", Integer.toString(claim.getHeight()))
+                );
 
         if (claim.isAdminClaim()) {
             options.strokeColor(Color.BLUE).fillColor(Color.BLUE);
