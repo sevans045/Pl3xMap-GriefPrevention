@@ -58,6 +58,13 @@ public class Config {
         yaml.options().copyDefaults(true);
 
         init();
+
+        try {
+            yaml.save(file);
+        } catch (IOException ex) {
+            plugin.getLogger().severe("Could not save " + file);
+            ex.printStackTrace();
+        }
     }
 
     private static YamlConfiguration yaml;
