@@ -10,12 +10,15 @@ import net.pl3x.map.api.marker.MarkerOptions;
 import net.pl3x.map.api.marker.Rectangle;
 import net.pl3x.map.griefprevention.configuration.Config;
 import net.pl3x.map.griefprevention.hook.GPHook;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.UUID;
+import java.util.stream.Collectors;
 
 public class Pl3xMapTask extends BukkitRunnable {
     private final MapWorld world;
@@ -74,10 +77,10 @@ public class Pl3xMapTask extends BukkitRunnable {
                         .replace("{world}", worldName)
                         .replace("{id}", Long.toString(claim.getID()))
                         .replace("{owner}", claim.getOwnerName())
-                        .replace("{managers}", String.join(", ", managers))
-                        .replace("{builders}", String.join(", ", builders))
-                        .replace("{containers}", String.join(", ", containers))
-                        .replace("{accessors}", String.join(", ", accessors))
+                        .replace("{managers}", managers.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
+                        .replace("{builders}", builders.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
+                        .replace("{containers}", containers.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
+                        .replace("{accessors}", accessors.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
                         .replace("{area}", Integer.toString(claim.getArea()))
                         .replace("{width}", Integer.toString(claim.getWidth()))
                         .replace("{height}", Integer.toString(claim.getHeight()))
