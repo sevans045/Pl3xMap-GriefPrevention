@@ -17,6 +17,7 @@ import org.bukkit.scheduler.BukkitRunnable;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -77,10 +78,10 @@ public class Pl3xMapTask extends BukkitRunnable {
                         .replace("{world}", worldName)
                         .replace("{id}", Long.toString(claim.getID()))
                         .replace("{owner}", claim.getOwnerName())
-                        .replace("{managers}", managers.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
-                        .replace("{builders}", builders.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
-                        .replace("{containers}", containers.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
-                        .replace("{accessors}", accessors.stream().map(uuid -> Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName()).collect(Collectors.joining(", ")))
+                        .replace("{managers}", getNames(managers))
+                        .replace("{builders}", getNames(builders))
+                        .replace("{containers}", getNames(containers))
+                        .replace("{accessors}", getNames(accessors))
                         .replace("{area}", Integer.toString(claim.getArea()))
                         .replace("{width}", Integer.toString(claim.getWidth()))
                         .replace("{height}", Integer.toString(claim.getHeight()))
@@ -94,6 +95,16 @@ public class Pl3xMapTask extends BukkitRunnable {
 
         String markerid = "griefprevention_" + worldName + "_region_" + Long.toHexString(claim.getID());
         this.provider.addMarker(Key.of(markerid), rect);
+    }
+
+    private static String getNames(List<String> list) {
+        return list.stream()
+                .map(uuid -> {
+                    if ("public".equals(uuid)) {
+                        return Config.STRINGS_PUBLIC;
+                    }
+                    return Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
+                }).collect(Collectors.joining(", "));
     }
 
     public void disable() {

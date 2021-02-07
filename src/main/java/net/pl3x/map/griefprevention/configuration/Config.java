@@ -18,6 +18,7 @@ public class Config {
     public static double STROKE_OPACITY = 1.0D;
     public static Color FILL_COLOR = Color.GREEN;
     public static double FILL_OPACITY = 0.2D;
+    public static String STRINGS_PUBLIC = "Public";
     public static String CLAIM_TOOLTIP = "Claim Owner: <span style=\"font-weight:bold;\">{owner}</span><br/>" +
             "Permission Trust: <span style=\"font-weight:bold;\">{managers}</span><br/>" +
             "Trust: <span style=\"font-weight:bold;\">{builders}</span><br/>" +
@@ -39,6 +40,7 @@ public class Config {
         STROKE_OPACITY = getDouble("settings.style.stroke.opacity", STROKE_OPACITY);
         FILL_COLOR = getColor("settings.style.fill.color", FILL_COLOR);
         FILL_OPACITY = getDouble("settings.style.fill.opacity", FILL_OPACITY);
+        STRINGS_PUBLIC = getString("settings.strings.public", STRINGS_PUBLIC);
         CLAIM_TOOLTIP = getString("settings.region.tooltip.regular-claim", CLAIM_TOOLTIP);
         ADMIN_CLAIM_TOOLTIP = getString("settings.region.tooltip.admin-claim", ADMIN_CLAIM_TOOLTIP);
     }
