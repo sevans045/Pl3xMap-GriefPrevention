@@ -98,13 +98,7 @@ public class Pl3xMapTask extends BukkitRunnable {
     }
 
     private static String getNames(List<String> list) {
-        return list.stream()
-                .map(uuid -> {
-                    if ("public".equals(uuid)) {
-                        return Config.STRINGS_PUBLIC;
-                    }
-                    return Bukkit.getOfflinePlayer(UUID.fromString(uuid)).getName();
-                }).collect(Collectors.joining(", "));
+        return String.join(", ", list);
     }
 
     public void disable() {
