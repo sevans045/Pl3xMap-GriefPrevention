@@ -12,6 +12,7 @@ import net.pl3x.map.griefprevention.configuration.Config;
 import net.pl3x.map.griefprevention.hook.GPHook;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.awt.Color;
@@ -98,7 +99,17 @@ public class Pl3xMapTask extends BukkitRunnable {
     }
 
     private static String getNames(List<String> list) {
-        return String.join(", ", list);
+        List<String> names = new ArrayList<>();
+        for (String str : list) {
+            try {
+                UUID uuid = UUID.fromString(str);
+                OfflinePlayer offlinePlayer = Bukkit.getOfflinePlayer(uuid);
+                names.add(offlinePlayer.getName());
+            } catch (Exception e) {
+                names.add(str);
+            }
+        }
+        return String.join(", ", names);
     }
 
     public void disable() {
